@@ -1,7 +1,8 @@
 # thermostat
-A tool for generating thermodynamic statistics.
+A toolbox for creating statistics for thermodynamic models.
 
-Makes massive use of https://github.com/usnistgov/teqp provided by Ian Bell.
+All properties are calculated with https://github.com/usnistgov/teqp provided by Ian Bell.
+
 
 
 
