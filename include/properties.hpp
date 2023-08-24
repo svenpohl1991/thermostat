@@ -8,7 +8,7 @@
 #include <teqp/cpp/teqpcpp.hpp>
 #include <teqp/json_builder.hpp>
 #include <teqp/cpp/deriv_adapter.hpp>
-#include "teqp/ideal_eosterms.hpp"
+#include <teqp/ideal_eosterms.hpp>
 #include <teqp/models/multifluid.hpp>
 
 #include <Eigen/Dense>
@@ -1152,7 +1152,7 @@ namespace thermostat {
                         set.insert_points(points_aut);
                         // overall statistic (only this one is create for vle)
                         auto reference = data.get_reference(id);
-                        stats << reference << endl;
+                        stats << format("{0:40s};;;;;;;", reference) << endl;
                         stats_state_vle state_vle = get_overall_stats_vle(set);
                         auto formatted_str = state_vle.get_stats_line();
                         stats << formatted_str << endl;
@@ -1164,7 +1164,7 @@ namespace thermostat {
 
                 // PVT;SND ETC
                 formatted_str = "";
-                formatted_str = format("{0:40s};{1:18s};{2:18s};{3:26s};{4:26s};{5:26s};{6:26s}", "Author", "Points Calc", "Points Failed", "Tmin - Tmax / K", "pmin - pmax / MPA", "xmin - xmax mol/mol", "AARD / %");
+                formatted_str = format("{0:40s};{1:18s};{2:18s};{3:26s};{4:26s};{5:26s};{6:26s}", "AUTHOR", "PTSCALC", "PTSCALCFAILED", "TBOUNDS", "PBOUNDS", "XBOUNDS", "AARD");
                 stats << formatted_str << endl;
 
                 for (auto id : data.get_biblios()) {
@@ -1179,7 +1179,7 @@ namespace thermostat {
 
                     // overall statistic
                     auto reference = data.get_reference(id);
-                    stats << reference << endl;
+                    stats << format("{0:40s};;;;;;;", reference) << endl;
                     stats_state state = get_overall_stats_hom(set);
                     auto formatted_str = state.get_stats_line();
                     stats << formatted_str << endl;

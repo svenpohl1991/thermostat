@@ -1,5 +1,5 @@
 #pragma once
-#include "../externals/teqp/include/teqp/json_tools.hpp"
+#include "teqp/json_tools.hpp"
 #include "stat_types.hpp"
 
 
