@@ -1,4 +1,4 @@
-#include "properties.hpp"
+#include "thermostat/properties.hpp"
 int main(int argc, char* argv[]) {
     std::string path;
     if (argc > 1) {

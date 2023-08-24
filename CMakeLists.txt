@@ -19,7 +19,7 @@ if(MSVC)
 target_sources(THERMOSTAT PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/externals/teqp/externals/Eigen/debug/msvc/eigen.natvis")
 endif()
 
-include_directories(THERMOSTAT "${CMAKE_CURRENT_SOURCE_DIR}/include")
+include_directories(THERMOSTAT "${CMAKE_CURRENT_SOURCE_DIR}/thermostat/include")
 
 target_link_libraries(THERMOSTAT PRIVATE autodiff PRIVATE teqpinterface PRIVATE Catch2WithMain PRIVATE teqpcpp)
 
