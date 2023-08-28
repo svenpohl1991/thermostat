@@ -51,4 +51,4 @@ python ..\python\table_tex.py DEV\stats.txt
 
 This will produce a *tex file for each data file. You can use it in a tex document to get the final result.
 
-<img src="doc/example_table.PNG" alt="" style="width: 300px;"/>
+<img src="doc/example_table.PNG" alt="" style="width: 900px;"/>
