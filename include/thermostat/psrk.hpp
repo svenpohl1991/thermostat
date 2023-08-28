@@ -1,6 +1,6 @@
 #pragma once
 #include "teqp/json_tools.hpp"
-#include "stat_types.hpp"
+#include "thermostat/stat_types.hpp"
 
 
 // Implementation of the Soave-Redlich-Kwong-EOS in pressure

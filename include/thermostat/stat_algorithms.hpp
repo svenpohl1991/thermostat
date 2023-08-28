@@ -1,6 +1,6 @@
 #pragma once
-#include <stat_types.hpp>
-#include <psrk.hpp>
+#include <thermostat/stat_types.hpp>
+#include <thermostat/psrk.hpp>
 
 namespace thermostat {
 

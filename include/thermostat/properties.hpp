@@ -18,9 +18,9 @@
 #include <string>
 #include <algorithm>
 
-#include <stat_algorithms.hpp>
-#include <stat_types.hpp>
-#include <psrk.hpp>
+#include <thermostat/stat_algorithms.hpp>
+#include <thermostat/stat_types.hpp>
+#include <thermostat/psrk.hpp>
 
 
 using namespace thermostat;
@@ -960,7 +960,7 @@ namespace thermostat {
                 values.push_back(xmax);
             }
             values.push_back(AARD);
-            format_ = format_ + "{" + to_string(arg_count) + ":10.2f};";
+            format_ = format_ + "{" + to_string(arg_count) + ":10.2f}";
             string formatted_string;
             if (values.size() == 1) { formatted_string = format(format_, " ", succ_pts, failed_pts, values[0]); }
             if (values.size() == 2) { formatted_string = format(format_, " ", succ_pts, failed_pts, values[0], values[1]); }
@@ -987,16 +987,19 @@ namespace thermostat {
             vector<string> format_;
             vector<double> values;
 
-            auto build_format = [](vector<string>& format, vector<double>& values, vector<double> bounds) {
+            auto build_format = [](vector<string>& format, vector<double>& values, vector<double> bounds, bool last = false) {
 
                 if (bounds.size() > 1) {
                     if (bounds[0] == bounds[1]) {
-                        format.push_back("{0:10.2f};             ");
+                        if(!(last)){format.push_back("{0:10.2f};             ");}
+                        else if(last) { format.push_back("{0:10.2f}              "); };
+                        
                         values.push_back(bounds[0]);
                     }
                     else {
                         format.push_back("{0:10.2f} - ");
-                        format.push_back("{0:<10.2f};");
+                        if (!(last)) { format.push_back("{0:<10.2f};"); }
+                        else if (last) { format.push_back("{0:<10.2f}"); };
                         values.push_back(bounds[0]);
                         values.push_back(bounds[1]);
                     }
@@ -1005,11 +1008,13 @@ namespace thermostat {
                 {
                     values.push_back(bounds[0]);
                     if (!(isnan(bounds[0]))) {
-                        format.push_back("{0:10.2f};");
+                        if (!(last)) { format.push_back("{0:10.2f};"); }
+                        else if (last) { format.push_back("{0:10.2f}"); };
                     }
                     else
                     {
-                        format.push_back("{0:10s};");
+                        if (!(last)) { format.push_back("{0:10s};"); }
+                        else if (last) { format.push_back("{0:10s}"); };
                     }
                 }
                 return make_tuple(format, values);
@@ -1020,7 +1025,7 @@ namespace thermostat {
             tie(format_, values) = build_format(format_, values, { x0min, x0max });
             tie(format_, values) = build_format(format_, values, { y0min, y0max });
             tie(format_, values) = build_format(format_, values, { AARD_x });
-            tie(format_, values) = build_format(format_, values, { AARD_y });
+            tie(format_, values) = build_format(format_, values, { AARD_y }, true);
 
 
             string formatted_string;
@@ -1134,9 +1139,8 @@ namespace thermostat {
             auto prop = data.get_prop();
             auto points = data.get_points();
 
-            stats << "--------------------------------------------------------------------" << endl;
-            stats << prop_t_str[prop] << endl;
-            stats << "--------------------------------------------------------------------" << endl;
+            
+            stats << "#" << prop_t_str[prop] << endl;
             string formatted_str;
             switch (prop)
             {
@@ -1179,7 +1183,7 @@ namespace thermostat {
 
                     // overall statistic
                     auto reference = data.get_reference(id);
-                    stats << format("{0:40s};;;;;;;", reference) << endl;
+                    stats << format("{0:40s};;;;;;", reference) << endl;
                     stats_state state = get_overall_stats_hom(set);
                     auto formatted_str = state.get_stats_line();
                     stats << formatted_str << endl;
@@ -1346,7 +1350,12 @@ namespace thermostat {
         stats.open(stats_out);
         vector< vector<data_point>> data;
         for (size_t i = 0; i < settings.dev_files.size(); i++) {
-
+            std::string t_name = settings.dev_files[i];
+            std::string ser = ".DEV";
+            std::string::size_type k = t_name.find(ser);
+            t_name.erase(k,ser.length());
+            stats << "@";
+            stats << t_name << endl;
             data_set dat;
             string dev_path = settings.dev_dir + "/" + settings.dev_files[i];
             auto prop_name = dat.read_dev_file(dev_path, flds_swap);
@@ -1356,6 +1365,7 @@ namespace thermostat {
             statistics stat;
             stat.create_stats(dat, stats);
         }
+        stats << '#' << endl;
         stats.close();
 
         return 0;

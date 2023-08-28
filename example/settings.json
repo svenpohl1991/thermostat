@@ -1,0 +1,14 @@
+{"kind"         : "MieElong" ,
+"model"       : {
+"combination"   : "One-Fluid",
+"components"    : ["argon","krypton"],
+"dev_dir"       : "DEV",
+"dev_files"     : ["ARKR_VLE.DEV","ARKR_PVT.DEV"],
+"srk_path"      : "srk.json",
+"model_path"    : "mie.json",
+"BIP"           : "../externals/teqp/mycp/dev/mixtures/mixture_binary_pairs.json",
+"departure"     : "../externals/teqp/mycp/dev/mixtures/mixture_departure_functions.json",
+"coolprop_root" : "../externals/teqp/mycp",
+"root"          : "../externals/teqp/mycp"}
+}
+
